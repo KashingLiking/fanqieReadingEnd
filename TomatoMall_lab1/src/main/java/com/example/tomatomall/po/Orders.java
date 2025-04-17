@@ -42,7 +42,7 @@ public class Orders {
 
     public OrdersVO toVO() {
         OrdersVO ordersVO = new OrdersVO();
-        ordersVO.setOrderId(this.id);
+        ordersVO.setId(this.id);
         ordersVO.setUserName(this.account.getName());
         ordersVO.setTotalAmount(this.totalAmount);
         ordersVO.setPaymentMethod(this.paymentMethod);

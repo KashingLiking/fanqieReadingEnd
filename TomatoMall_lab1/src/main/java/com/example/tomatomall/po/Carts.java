@@ -41,7 +41,7 @@ public class Carts {
 
     public CartItemVO toItemVO() {
         CartItemVO cartItemVO = new CartItemVO();
-        cartItemVO.setCartItemId(this.id);
+        cartItemVO.setId(this.id);
         cartItemVO.setProductId(this.product.getId());
         cartItemVO.setTitle(this.product.getTitle());
         cartItemVO.setPrice(this.product.getPrice());

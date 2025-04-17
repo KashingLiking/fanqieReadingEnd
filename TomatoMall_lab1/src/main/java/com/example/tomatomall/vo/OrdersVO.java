@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class OrdersVO {
-    private Integer orderId;
+    private Integer id;
 
     private String userName;
 
@@ -24,7 +24,7 @@ public class OrdersVO {
 
     public Orders toPO(){
         Orders orders=new Orders();
-        orders.setOrderId(this.orderId);
+        orders.setId(this.id);
         orders.setTotalAmount(this.totalAmount);
         orders.setPaymentMethod(this.paymentMethod);
         orders.setStatus(this.status);
