@@ -1,5 +1,6 @@
 package com.example.tomatomall.serviceImpl;
 
+import com.example.tomatomall.exception.TomatomallException;
 import com.example.tomatomall.po.*;
 import com.example.tomatomall.repository.AccountRepository;
 import com.example.tomatomall.repository.CartsRepository;
@@ -49,7 +50,11 @@ public class CartsServiceImpl implements CartsService {
             carts.setAccount(securityUtil.getCurrentAccount());
             carts.setProduct(product.get());
             Carts retCarts = cartsRepository.save(carts);
-            return retCarts.toItemVO();
+            if(carts.getQuantity()<=product.get().getStockpile().getAmount()){
+                return retCarts.toItemVO();
+            }else{
+                throw TomatomallException.productsNotEnough();
+            }
         }
         return null;
     }

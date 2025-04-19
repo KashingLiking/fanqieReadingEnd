@@ -34,4 +34,8 @@ public class TomatomallException extends RuntimeException {
         return new TomatomallException("400", "商品不存在");
     }
 
+    public static TomatomallException productsNotEnough() {
+        return new TomatomallException("405", "商品不够");
+    }
+
 }
