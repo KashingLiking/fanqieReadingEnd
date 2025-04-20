@@ -22,27 +22,27 @@ public class Carts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "cartItemId")
-    private Integer id;
+    private int cartItemId;
 
-    @Basic
-    @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
-    private Integer quantity = 1;  // Added default value
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false , unique = true)
+    private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable = false , unique = true)
-    private Account account;
+    @Basic
+    @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
+    private int quantity = 1;
 
     @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CartsOrdersRelation> cartsOrdersRelations = new ArrayList<>();
 
     public CartItemVO toItemVO() {
         CartItemVO cartItemVO = new CartItemVO();
-        cartItemVO.setId(this.id);
-        cartItemVO.setProductId(this.product.getId());
+        cartItemVO.setCartItemId(this.cartItemId);
+        cartItemVO.setProductId(this.product.getProductId());
         cartItemVO.setTitle(this.product.getTitle());
         cartItemVO.setPrice(this.product.getPrice());
         cartItemVO.setDescription(this.product.getDescription());

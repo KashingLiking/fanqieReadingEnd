@@ -50,11 +50,10 @@ public class CartsServiceImpl implements CartsService {
             carts.setAccount(securityUtil.getCurrentAccount());
             carts.setProduct(product.get());
             Carts retCarts = cartsRepository.save(carts);
-            if(carts.getQuantity()<=product.get().getStockpile().getAmount()){
-                return retCarts.toItemVO();
-            }else{
+            if(carts.getQuantity()>product.get().getStockpile().getAmount()){
                 throw TomatomallException.productsNotEnough();
             }
+            return retCarts.toItemVO();
         }
         return null;
     }
@@ -66,7 +65,7 @@ public class CartsServiceImpl implements CartsService {
             cartsRepository.deleteById(cartItemId);
             return "删除成功";
         }catch (Exception e) {
-            return null;
+            throw TomatomallException.cartProductNotExits();
         }
     }
 
@@ -79,8 +78,9 @@ public class CartsServiceImpl implements CartsService {
             Carts carts = cartsOptional.get();
             carts.setQuantity(quantity);
             return "修改数量成功";
+        }else{
+            throw TomatomallException.cartProductNotExits();
         }
-        return "购物车商品不存在";
     }
 
     @Override

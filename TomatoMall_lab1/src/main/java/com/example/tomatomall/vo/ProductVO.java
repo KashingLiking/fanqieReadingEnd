@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProductVO {
-    private Integer id;
+    private int productId;
 
     private String title;
 
@@ -32,7 +32,7 @@ public class ProductVO {
 
     public Product toPO(){
         Product product=new Product();
-        product.setId(this.id);
+        product.setProductId(this.productId);
         product.setTitle(this.title);
         product.setPrice(this.price);
         product.setRate(this.rate);

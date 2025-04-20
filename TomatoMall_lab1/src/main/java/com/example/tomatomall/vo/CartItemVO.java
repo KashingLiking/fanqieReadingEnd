@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class CartItemVO {
-    private Integer id;
+    private int cartItemId;
 
     private Integer productId;
 

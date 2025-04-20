@@ -17,7 +17,7 @@ public class CartsOrdersRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cartitem_id", referencedColumnName = "cartItemId", nullable = false)

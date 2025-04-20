@@ -21,8 +21,8 @@ public class Product {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "productId")
+    private int productId;
 
     @Basic
     @Column(name="title",nullable = false)
@@ -59,7 +59,7 @@ public class Product {
 
     public ProductVO toVO(){
         ProductVO productVO=new ProductVO();
-        productVO.setId(this.id);
+        productVO.setProductId(this.productId);
         productVO.setTitle(this.title);
         productVO.setPrice(this.price);
         productVO.setRate(this.rate);

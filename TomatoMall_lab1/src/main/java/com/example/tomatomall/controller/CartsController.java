@@ -58,8 +58,7 @@ public class CartsController {
      * 提交订单
      */
     @PostMapping("/checkout")
-    public ResponseVO<OrdersVO> createOrder(
-            @RequestBody CheckoutRequestVO checkoutRequestVO) {
+    public ResponseVO<OrdersVO> createOrder(@RequestBody CheckoutRequestVO checkoutRequestVO) {
         return ResponseVO.buildSuccess(cartsService.createOrder(checkoutRequestVO));
     }
 }

@@ -38,4 +38,6 @@ public class TomatomallException extends RuntimeException {
         return new TomatomallException("405", "商品不够");
     }
 
+    public static TomatomallException cartProductNotExits() {return new TomatomallException("400", "购物车商品不存在");}
+
 }

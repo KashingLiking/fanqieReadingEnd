@@ -18,17 +18,11 @@ public class CheckoutRequestVO {
     private static class ShippingAddress{
         private String name;        // 收货人姓名
 
-        private String phone;       // 联系电话
+        private String phone;       // 电话
 
         private String postalCode;  // 邮编
 
         private String address;     // 详细地址
-
-        private String province;    // 省份（可选）
-
-        private String city;        // 城市（可选）
-
-        private String district;   // 区县（可选）
     }
 }
 

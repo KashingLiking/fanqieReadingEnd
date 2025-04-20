@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class AdvertisementsVO {
-    private Integer id;
+    private int advertisementId;
 
     private String title;
 
@@ -22,7 +22,7 @@ public class AdvertisementsVO {
     private String productId;
     public Advertisements toPO(){
         Advertisements advertisements=new Advertisements();
-        advertisements.setId(this.id);
+        advertisements.setAdvertisementId(this.advertisementId);
         advertisements.setTitle(this.title);
         advertisements.setContent(this.content);
         advertisements.setImgUrl(this.imgUrl);

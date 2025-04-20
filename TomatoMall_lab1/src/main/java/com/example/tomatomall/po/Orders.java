@@ -19,19 +19,19 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "orderId")
-    private Integer id;  // 修正了变量名大小写
+    private Integer id;
 
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;  // 改为BigDecimal类型表示金额
+    private BigDecimal totalAmount;
 
     @Column(name = "payment_method", nullable = false, length = 50)
-    private String paymentMethod;  // 支付方式
+    private String paymentMethod;
 
     @Column(name = "status", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'PENDING'")
-    private String status = "PENDING";  // 订单状态
+    private String status = "PENDING";
 
     @Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createTime;  // 创建时间
+    private LocalDateTime createTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
