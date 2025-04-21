@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,8 +39,8 @@ public class Orders {
     @JoinColumn(name = "userId", nullable = false)
     private Account account;
 
-    @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private CartsOrdersRelation cartsOrdersRelation;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartsOrdersRelation> cartsOrdersRelations = new ArrayList<>();
 
     public OrdersVO toVO() {
         OrdersVO ordersVO = new OrdersVO();

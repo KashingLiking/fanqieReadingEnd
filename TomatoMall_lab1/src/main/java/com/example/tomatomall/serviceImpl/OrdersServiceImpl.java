@@ -5,7 +5,11 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.example.tomatomall.exception.TomatomallException;
+import com.example.tomatomall.po.Carts;
+import com.example.tomatomall.po.CartsOrdersRelation;
 import com.example.tomatomall.po.Orders;
+import com.example.tomatomall.po.Product;
 import com.example.tomatomall.repository.CartsRepository;
 import com.example.tomatomall.repository.OrdersRepository;
 import com.example.tomatomall.repository.ProductRepository;
@@ -20,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -91,7 +96,25 @@ public class OrdersServiceImpl implements OrdersService {
 
     private void deductInventory(Integer orderId) {
         Optional<Orders> order = ordersRepository.findById(orderId);
+        if(!order.isPresent()){
+            throw TomatomallException.orderNotExits();
+        }
+        Orders orders = order.get();
+        List<CartsOrdersRelation> relations = orders.getCartsOrdersRelations();
 
+        for (CartsOrdersRelation relation : relations) {
+            Carts cartItem = relation.getCartItem();
+            Product product = cartItem.getProduct();
+
+            int currentStock = product.getStockpile().getAmount();
+            int requiredQuantity = cartItem.getQuantity();
+
+            if (currentStock < requiredQuantity) {
+                throw TomatomallException.productsNotEnough();
+            }
+            product.getStockpile().setAmount(currentStock - requiredQuantity);
+            productRepository.save(product);
+        }
     }
 
     private String generateAlipayForm(Orders order) {
