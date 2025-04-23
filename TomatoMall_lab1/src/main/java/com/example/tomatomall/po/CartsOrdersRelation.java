@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
+import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,13 +17,13 @@ public class CartsOrdersRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cartitem_id", referencedColumnName = "cartItemId", nullable = false)
     private Carts cartItem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "orderId", nullable = false)
     private Orders orders;
 

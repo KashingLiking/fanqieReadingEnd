@@ -11,12 +11,12 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     // 支持String类型ID的查询
-    @Query("SELECT p FROM Product p WHERE p.id = :id")
+    @Query("SELECT p FROM Product p WHERE p.productId = :id")
     Optional<Product> findById(@Param("id") String id);
 
     // 关联查询
     @EntityGraph(attributePaths = {"specifications", "stockpile"})
-    Optional<Product> findWithAssociationsById(Integer id);
+    Optional<Product> findWithAssociationsByProductId(Integer id);
 
-    Product findByCartItemId(String cartItemId);
+//    Product findByCartItemId(String cartItemId);
 }

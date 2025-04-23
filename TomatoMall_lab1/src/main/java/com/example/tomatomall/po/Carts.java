@@ -22,19 +22,19 @@ public class Carts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "cartItemId")
-    private int cartItemId;
+    private Integer cartItemId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable = false , unique = true)
-    private Account account;
+    @Basic
+    @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
+    private Integer quantity = 1;  // Added default value
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Basic
-    @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
-    private int quantity = 1;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false , unique = true)
+    private Account account;
 
     @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CartsOrdersRelation> cartsOrdersRelations = new ArrayList<>();

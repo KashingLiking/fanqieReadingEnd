@@ -64,7 +64,7 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.save(order);
         AliPayVO aliPayVO = new AliPayVO();
         aliPayVO.setPaymentForm(paymentForm);
-        aliPayVO.setOrderId(String.valueOf(order.getId()));
+        aliPayVO.setOrderId(String.valueOf(order.getOrderId()));
         aliPayVO.setTotalAmount(order.getTotalAmount());
         aliPayVO.setPaymentMethod("Alipay");
 
@@ -88,10 +88,10 @@ public class OrdersServiceImpl implements OrdersService {
         }
 
         order.setStatus("PAID");
-        order.setId(Integer.valueOf(alipayTradeNo));
+        order.setOrderId(Integer.valueOf(alipayTradeNo));
         ordersRepository.save(order);
 
-        deductInventory(order.getId());
+        deductInventory(order.getOrderId());
     }
 
     private void deductInventory(Integer orderId) {
@@ -100,8 +100,8 @@ public class OrdersServiceImpl implements OrdersService {
             throw TomatomallException.orderNotExits();
         }
         Orders orders = order.get();
-        List<CartsOrdersRelation> relations = orders.getCartsOrdersRelations();
-
+        CartsOrdersRelation relation = orders.getCartsOrdersRelation();
+        Carts carts
         for (CartsOrdersRelation relation : relations) {
             Carts cartItem = relation.getCartItem();
             Product product = cartItem.getProduct();
@@ -127,9 +127,9 @@ public class OrdersServiceImpl implements OrdersService {
             request.setReturnUrl(returnUrl);
 
             JSONObject bizContent = new JSONObject();
-            bizContent.put("out_trade_no", order.getId());
+            bizContent.put("out_trade_no", order.getOrderId());
             bizContent.put("total_amount", order.getTotalAmount());
-            bizContent.put("subject", "订单支付-" + order.getId());
+            bizContent.put("subject", "订单支付-" + order.getOrderId());
             bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
             request.setBizContent(bizContent.toString());
 

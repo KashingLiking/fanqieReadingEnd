@@ -14,12 +14,12 @@ import java.util.Optional;
 public interface CartsRepository extends JpaRepository<Carts, Integer> {
 
     // 支持String类型ID的查询
-    @Query("SELECT p FROM Product p WHERE p.id = :id")
+    @Query("SELECT p FROM Product p WHERE p.productId = :id")
     Optional<Carts> findById(@Param("id") String id);
 
     // 关联查询
     @EntityGraph(attributePaths = {"specifications", "stockpile"})
-    Optional<Carts> findWithAssociationsById(Integer id);
+    Optional<Carts> findWithAssociationsByCartItemId(Integer id);
 
     List<Carts> findByAccount(Account account);
 }

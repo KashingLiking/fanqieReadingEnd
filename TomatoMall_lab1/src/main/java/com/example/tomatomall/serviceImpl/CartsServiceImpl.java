@@ -124,9 +124,10 @@ public class CartsServiceImpl implements CartsService {
         BigDecimal total = BigDecimal.ZERO;
 
         for (String itemId : cartItemIds) {
-            BigDecimal price = cartsRepository.findById(itemId).get().getProduct().getPrice();    // 获取商品单价
-            int quantity = cartsRepository.findById(itemId).get().getQuantity();        // 获取商品数量
-            if(quantity>productRepository.findByCartItemId(itemId).getStockpile().getAmount()){
+            Carts carts = cartsRepository.findById(itemId).get();
+            BigDecimal price = carts.getProduct().getPrice();    // 获取商品单价
+            int quantity = carts.getQuantity();        // 获取商品数量
+            if(quantity>carts.getProduct().getStockpile().getAmount()){
                 total = BigDecimal.ZERO;
                 break;
             }
