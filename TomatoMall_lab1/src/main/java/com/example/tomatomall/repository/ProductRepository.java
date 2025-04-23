@@ -18,5 +18,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @EntityGraph(attributePaths = {"specifications", "stockpile"})
     Optional<Product> findWithAssociationsByProductId(Integer id);
 
-//    Product findByCartItemId(String cartItemId);
+
 }
