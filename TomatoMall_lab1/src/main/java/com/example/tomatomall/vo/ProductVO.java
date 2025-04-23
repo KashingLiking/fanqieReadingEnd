@@ -32,7 +32,7 @@ public class ProductVO {
 
     public Product toPO(){
         Product product=new Product();
-        product.setProductId(this.productId);
+        product.setId(this.productId);
         product.setTitle(this.title);
         product.setPrice(this.price);
         product.setRate(this.rate);

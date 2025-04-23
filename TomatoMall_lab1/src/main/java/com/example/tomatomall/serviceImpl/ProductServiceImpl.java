@@ -170,7 +170,7 @@ public class ProductServiceImpl implements ProductService {
     // 辅助方法：将Product实体转换为ProductVO
     private ProductVO convertToProductVO(Product product) {
         ProductVO productVO = product.toVO();
-        productVO.setProductId(product.getProductId());
+        productVO.setProductId(product.getId());
 
         // 设置规格VO
         if (product.getSpecifications() != null) {
@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
                     .map(spec -> {
                         SpecificationVO specVO = spec.toVO();
                         specVO.setId(spec.getId());
-                        specVO.setProduct_id(spec.getProduct().getProductId());
+                        specVO.setProduct_id(spec.getProduct().getId());
                         return specVO;
                     })
                     .collect(Collectors.toList());
@@ -189,7 +189,7 @@ public class ProductServiceImpl implements ProductService {
         if (product.getStockpile() != null) {
             StockpileVO stockpileVO = product.getStockpile().toVO();
             stockpileVO.setId(product.getStockpile().getId());
-            stockpileVO.setProduct_id(product.getStockpile().getProduct().getProductId());
+            stockpileVO.setProduct_id(product.getStockpile().getProduct().getId());
             productVO.setStockpile(stockpileVO);
         }
 

@@ -22,7 +22,7 @@ public class AdvertisementsVO {
     private String productId;
     public Advertisements toPO(){
         Advertisements advertisements=new Advertisements();
-        advertisements.setAdvertisementId(this.AdvertisementId);
+        advertisements.setId(this.AdvertisementId);
         advertisements.setTitle(this.title);
         advertisements.setContent(this.content);
         advertisements.setImgUrl(this.imgUrl);

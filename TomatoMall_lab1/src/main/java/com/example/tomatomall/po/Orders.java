@@ -21,7 +21,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "orderId")
-    private Integer orderId;  // 修正了变量名大小写
+    private Integer id;  // 修正了变量名大小写
 
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;  // 改为BigDecimal类型表示金额
@@ -44,7 +44,7 @@ public class Orders {
 
     public OrdersVO toVO() {
         OrdersVO ordersVO = new OrdersVO();
-        ordersVO.setOrderId(this.orderId);
+        ordersVO.setOrderId(this.id);
         ordersVO.setUserName(this.account.getName());
         ordersVO.setTotalAmount(this.totalAmount);
         ordersVO.setPaymentMethod(this.paymentMethod);

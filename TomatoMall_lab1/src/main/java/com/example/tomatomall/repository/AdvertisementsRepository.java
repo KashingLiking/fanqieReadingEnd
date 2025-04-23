@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface AdvertisementsRepository extends JpaRepository<Advertisements, Integer> {
-    @Query("SELECT a FROM Advertisements a WHERE a.advertisementId = :id")
+    @Query("SELECT a FROM Advertisements a WHERE a.id = :id")
     Optional<Advertisements> findById(@Param("id") String id);
 }

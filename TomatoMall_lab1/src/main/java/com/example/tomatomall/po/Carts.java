@@ -22,7 +22,7 @@ public class Carts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "cartItemId")
-    private Integer cartItemId;
+    private Integer id;
 
     @Basic
     @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
@@ -41,8 +41,8 @@ public class Carts {
 
     public CartItemVO toItemVO() {
         CartItemVO cartItemVO = new CartItemVO();
-        cartItemVO.setCartItemId(this.cartItemId);
-        cartItemVO.setProductId(this.product.getProductId());
+        cartItemVO.setCartItemId(this.id);
+        cartItemVO.setProductId(this.product.getId());
         cartItemVO.setTitle(this.product.getTitle());
         cartItemVO.setPrice(this.product.getPrice());
         cartItemVO.setDescription(this.product.getDescription());
