@@ -57,8 +57,8 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Orders> orders = new ArrayList<>();
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Carts carts;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Carts> carts = new ArrayList<>();
 
     public AccountVO toVO(){
         AccountVO accountVO=new AccountVO();

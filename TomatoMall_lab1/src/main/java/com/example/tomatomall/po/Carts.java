@@ -32,7 +32,7 @@ public class Carts {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false , unique = true)
     private Account account;
 

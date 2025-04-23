@@ -35,6 +35,9 @@ public class OrdersServiceImpl implements OrdersService {
     private OrdersRepository ordersRepository;
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private SecurityUtil securityUtil;
     @Value("${alipay.app-id}")
     private String appId;
     @Value("${alipay.private-key}")
@@ -101,13 +104,12 @@ public class OrdersServiceImpl implements OrdersService {
         }
         Orders orders = order.get();
         CartsOrdersRelation relation = orders.getCartsOrdersRelation();
-        Carts carts
-        for (CartsOrdersRelation relation : relations) {
-            Carts cartItem = relation.getCartItem();
-            Product product = cartItem.getProduct();
+        List<Carts> carts =securityUtil.getCurrentAccount().getCarts();
+        for (Carts carts1 : carts) {
+            Product product = carts1.getProduct();
 
             int currentStock = product.getStockpile().getAmount();
-            int requiredQuantity = cartItem.getQuantity();
+            int requiredQuantity = carts1.getQuantity();
 
             if (currentStock < requiredQuantity) {
                 throw TomatomallException.productsNotEnough();
