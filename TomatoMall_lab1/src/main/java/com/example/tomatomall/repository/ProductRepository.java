@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    // 支持String类型ID的查询
+    // 支持String类型ID查询
     @Query("SELECT p FROM Product p WHERE p.productId = :id")
     Optional<Product> findById(@Param("id") String id);
 
