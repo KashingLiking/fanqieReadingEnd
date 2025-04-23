@@ -68,7 +68,7 @@ public class AdvertisementsServiceImpl implements AdvertisementsService {
     }
     private AdvertisementsVO convertToAdvertisementsVO(Advertisements advertisements) {
         AdvertisementsVO advertisementsVO = advertisements.toVO();
-        advertisementsVO.setAdvertisementId(advertisements.getAdvertisementId());
+        advertisementsVO.setAdvertisementId(advertisements.getId());
         return advertisementsVO;
     }
 }

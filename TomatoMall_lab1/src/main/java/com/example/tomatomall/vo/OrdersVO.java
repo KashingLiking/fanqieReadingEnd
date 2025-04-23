@@ -24,7 +24,7 @@ public class OrdersVO {
 
     public Orders toPO(){
         Orders orders=new Orders();
-        orders.setOrderId(this.orderId);
+        orders.setId(this.orderId);
         orders.setTotalAmount(this.totalAmount);
         orders.setPaymentMethod(this.paymentMethod);
         orders.setStatus(this.status);

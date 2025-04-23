@@ -16,7 +16,7 @@ public class Advertisements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "advertisementId")
-    private Integer advertisementId;
+    private Integer id;
 
     @Basic
     @Column(name="title",nullable = false)
@@ -36,7 +36,7 @@ public class Advertisements {
 
     public AdvertisementsVO toVO(){
         AdvertisementsVO advertisementsVO = new AdvertisementsVO();
-        advertisementsVO.setAdvertisementId(this.advertisementId);
+        advertisementsVO.setAdvertisementId(this.id);
         advertisementsVO.setTitle(this.title);
         advertisementsVO.setContent(this.content);
         advertisementsVO.setImgUrl(this.imgUrl);
