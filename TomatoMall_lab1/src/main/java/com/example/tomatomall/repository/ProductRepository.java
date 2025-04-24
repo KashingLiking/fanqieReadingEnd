@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.id = :id")
     Optional<Product> findById(@Param("id") String id);
 
-
-
-
+    // 关联查询
+    @EntityGraph(attributePaths = {"specifications", "stockpile"})
+    Optional<Product> findWithAssociationsById(Integer id);
 }

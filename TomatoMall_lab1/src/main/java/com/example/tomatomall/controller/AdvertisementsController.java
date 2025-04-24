@@ -16,7 +16,7 @@ public class AdvertisementsController {
     /**
      * 获取所有广告信息
      */
-    @GetMapping 
+    @GetMapping
     public ResponseVO<List<AdvertisementsVO>> getAdvertisements() {
         return ResponseVO.buildSuccess(advertisementsService.getAdvs());
     }
