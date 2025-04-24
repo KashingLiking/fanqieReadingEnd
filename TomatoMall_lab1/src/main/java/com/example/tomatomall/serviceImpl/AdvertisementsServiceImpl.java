@@ -31,7 +31,7 @@ public class AdvertisementsServiceImpl implements AdvertisementsService {
     @Override
     @Transactional
     public String updateAdv(AdvertisementsVO advertisementsVO) {
-        Optional<Advertisements> advertisementsOptional = advertisementsRepository.findById(advertisementsVO.getAdvertisementId());
+        Optional<Advertisements> advertisementsOptional = advertisementsRepository.findById(advertisementsVO.getId());
         if (advertisementsOptional.isPresent()) {
             Advertisements advertisements = advertisementsOptional.get();
             advertisements.setTitle(advertisementsVO.getTitle());
@@ -68,7 +68,7 @@ public class AdvertisementsServiceImpl implements AdvertisementsService {
     }
     private AdvertisementsVO convertToAdvertisementsVO(Advertisements advertisements) {
         AdvertisementsVO advertisementsVO = advertisements.toVO();
-        advertisementsVO.setAdvertisementId(advertisements.getId());
+        advertisementsVO.setId(advertisements.getId());
         return advertisementsVO;
     }
 }

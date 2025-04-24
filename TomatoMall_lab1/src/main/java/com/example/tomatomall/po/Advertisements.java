@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Advertisements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "advertisementId")
+    @Column(name = "id")
     private Integer id;
 
     @Basic
@@ -36,7 +36,7 @@ public class Advertisements {
 
     public AdvertisementsVO toVO(){
         AdvertisementsVO advertisementsVO = new AdvertisementsVO();
-        advertisementsVO.setAdvertisementId(this.id);
+        advertisementsVO.setId(this.id);
         advertisementsVO.setTitle(this.title);
         advertisementsVO.setContent(this.content);
         advertisementsVO.setImgUrl(this.imgUrl);
