@@ -85,8 +85,10 @@ public class CartsServiceImpl implements CartsService {
 
     @Override
     public CartItemsVO getCartItems() {
-        List<Carts> cartsList = cartsRepository.findByAccount(securityUtil.getCurrentAccount());
+        List<Carts> cartsList = cartsRepository.findCartItemsByUserId(securityUtil.getCurrentAccount().getUserid());
+        System.out.println(cartsList);
         List<CartItemVO> cartItemVOList = convertToCartItemVOList(cartsList);
+        System.out.println(cartItemVOList);
         CartItemsVO cartItemsVO = new CartItemsVO();
         cartItemsVO.setCartItemVOList(cartItemVOList);
         cartItemsVO.calculateTotalAmount(cartItemVOList);
@@ -116,15 +118,18 @@ public class CartsServiceImpl implements CartsService {
         ordersVO.setPaymentMethod(checkoutRequestVO.getPaymentMethod());
         ordersVO.setCreateTime(LocalDateTime.now());
         ordersVO.setStatus("PENDING");
-        Orders orders = ordersRepository.save(ordersVO.toPO());
-        return orders.toVO();
+        Orders orders = ordersVO.toPO();
+        orders.setAccount(securityUtil.getCurrentAccount());
+        Orders order_front = ordersRepository.save(orders);
+        return order_front.toVO();
     }
 
     public BigDecimal totalPrice(List<String> cartItemIds) {
         BigDecimal total = BigDecimal.ZERO;
 
         for (String itemId : cartItemIds) {
-            Carts carts = cartsRepository.findById(itemId).get();
+            System.out.println(itemId);
+            Carts carts = cartsRepository.findById(Integer.parseInt(itemId)).get();
             BigDecimal price = carts.getProduct().getPrice();    // 获取商品单价
             int quantity = carts.getQuantity();        // 获取商品数量
             if(quantity>carts.getProduct().getStockpile().getAmount()){

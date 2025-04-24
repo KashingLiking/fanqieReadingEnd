@@ -1,8 +1,11 @@
 package com.example.tomatomall.vo;
 import com.example.tomatomall.po.Orders;
+import com.example.tomatomall.util.SecurityUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -10,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class OrdersVO {
+
     private Integer orderId;
 
     private String userName;

@@ -13,9 +13,9 @@ import java.util.List;
 public class CartItemsVO {
     private List<CartItemVO> cartItemVOList;
 
-    private Integer total ;
+    private Integer total = 0 ;
 
-    private BigDecimal totalAmount ;
+    private BigDecimal totalAmount = new BigDecimal(0);
 
     public void calculateTotalQuantity(List<CartItemVO> cartItemVOList) {
         for (CartItemVO cartItemVO : cartItemVOList) {

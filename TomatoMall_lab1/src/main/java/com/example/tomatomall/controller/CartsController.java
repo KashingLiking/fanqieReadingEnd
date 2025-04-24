@@ -59,6 +59,7 @@ public class CartsController {
      */
     @PostMapping("/checkout")
     public ResponseVO<OrdersVO> createOrder(@RequestBody CheckoutRequestVO checkoutRequestVO) {
+        System.out.println(checkoutRequestVO.getCartItemIds());
         return ResponseVO.buildSuccess(cartsService.createOrder(checkoutRequestVO));
     }
 }
