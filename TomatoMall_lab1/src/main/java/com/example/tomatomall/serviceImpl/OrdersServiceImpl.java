@@ -80,18 +80,15 @@ public class OrdersServiceImpl implements OrdersService {
         // 查询订单
         Orders order = ordersRepository.findById(Integer.parseInt(orderId))
                 .orElseThrow(() -> new RuntimeException("订单不存在: " + orderId));
-
         if ("PAID".equals(order.getStatus())) {
             log.warn("订单已支付，跳过处理: {}", orderId);
             return;
         }
-
         if (order.getTotalAmount().compareTo(amount) != 0) {
             throw new RuntimeException("支付金额与订单金额不符");
         }
-
         order.setStatus("PAID");
-        order.setId(Integer.valueOf(alipayTradeNo));
+        order.setId(Integer.valueOf(orderId));
         ordersRepository.save(order);
 
         deductInventory(order.getId());
@@ -103,14 +100,12 @@ public class OrdersServiceImpl implements OrdersService {
             throw TomatomallException.orderNotExits();
         }
         Orders orders = order.get();
-        CartsOrdersRelation relation = orders.getCartsOrdersRelation();
-        List<Carts> carts =securityUtil.getCurrentAccount().getCarts();
-        for (Carts carts1 : carts) {
-            Product product = carts1.getProduct();
-
+        List<CartsOrdersRelation> relations = orders.getCartsOrdersRelation();
+        for (CartsOrdersRelation relation : relations ) {
+            Carts cartItem = relation.getCartItem();
+            Product product = cartItem.getProduct();
             int currentStock = product.getStockpile().getAmount();
-            int requiredQuantity = carts1.getQuantity();
-
+            int requiredQuantity = cartItem.getQuantity();
             if (currentStock < requiredQuantity) {
                 throw TomatomallException.productsNotEnough();
             }

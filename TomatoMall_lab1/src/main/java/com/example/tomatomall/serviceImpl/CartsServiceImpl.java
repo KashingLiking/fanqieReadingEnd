@@ -2,10 +2,7 @@ package com.example.tomatomall.serviceImpl;
 
 import com.example.tomatomall.exception.TomatomallException;
 import com.example.tomatomall.po.*;
-import com.example.tomatomall.repository.AccountRepository;
-import com.example.tomatomall.repository.CartsRepository;
-import com.example.tomatomall.repository.OrdersRepository;
-import com.example.tomatomall.repository.ProductRepository;
+import com.example.tomatomall.repository.*;
 import com.example.tomatomall.service.CartsService;
 import com.example.tomatomall.util.SecurityUtil;
 import com.example.tomatomall.vo.*;
@@ -33,6 +30,9 @@ public class CartsServiceImpl implements CartsService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CartsOrdersRelationRepository cartsOrdersRelationRepository;
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -86,9 +86,7 @@ public class CartsServiceImpl implements CartsService {
     @Override
     public CartItemsVO getCartItems() {
         List<Carts> cartsList = cartsRepository.findCartItemsByUserId(securityUtil.getCurrentAccount().getUserid());
-        System.out.println(cartsList);
         List<CartItemVO> cartItemVOList = convertToCartItemVOList(cartsList);
-        System.out.println(cartItemVOList);
         CartItemsVO cartItemsVO = new CartItemsVO();
         cartItemsVO.setCartItemVOList(cartItemVOList);
         cartItemsVO.calculateTotalAmount(cartItemVOList);
@@ -109,8 +107,9 @@ public class CartsServiceImpl implements CartsService {
     @Override
     @Transactional
     public OrdersVO createOrder(CheckoutRequestVO checkoutRequestVO) {
+        Account account = securityUtil.getCurrentAccount();
         OrdersVO ordersVO = new OrdersVO();
-        ordersVO.setUserName(securityUtil.getCurrentAccount().getName());
+        ordersVO.setUserName(account.getName());
         ordersVO.setTotalAmount(totalPrice(checkoutRequestVO.getCartItemIds()));
         if (Objects.equals(ordersVO.getTotalAmount(), BigDecimal.ZERO)){
             return null;
@@ -119,8 +118,16 @@ public class CartsServiceImpl implements CartsService {
         ordersVO.setCreateTime(LocalDateTime.now());
         ordersVO.setStatus("PENDING");
         Orders orders = ordersVO.toPO();
-        orders.setAccount(securityUtil.getCurrentAccount());
+        orders.setAccount(account);
         Orders order_front = ordersRepository.save(orders);
+        for(String cartItemId : checkoutRequestVO.getCartItemIds()){
+            Optional<Carts> carts = cartsRepository.findById(Integer.valueOf(cartItemId));
+            Carts cartItem = carts.get();
+            CartsOrdersRelation relation = new CartsOrdersRelation();
+            relation.setCartItem(cartItem);
+            relation.setOrders(orders);
+            cartsOrdersRelationRepository.save(relation);
+        }
         return order_front.toVO();
     }
 
@@ -128,7 +135,6 @@ public class CartsServiceImpl implements CartsService {
         BigDecimal total = BigDecimal.ZERO;
 
         for (String itemId : cartItemIds) {
-            System.out.println(itemId);
             Carts carts = cartsRepository.findById(Integer.parseInt(itemId)).get();
             BigDecimal price = carts.getProduct().getPrice();    // 获取商品单价
             int quantity = carts.getQuantity();        // 获取商品数量

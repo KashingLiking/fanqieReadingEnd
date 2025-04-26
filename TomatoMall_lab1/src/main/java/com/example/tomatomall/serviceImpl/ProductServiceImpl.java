@@ -152,6 +152,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = productOptional.get();
             Stockpile stockpile = product.getStockpile();
             stockpile.setAmount(amount);
+            stockpile.setFrozen(product.getStockpile().getFrozen());
             return "调整库存成功";
         }
         return "商品不存在";

@@ -23,7 +23,7 @@ public class CartsOrdersRelation {
     @JoinColumn(name = "cartitem_id", referencedColumnName = "cartItemId", nullable = false)
     private Carts cartItem;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "orderId", nullable = false)
     private Orders orders;
 

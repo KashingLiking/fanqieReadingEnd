@@ -37,31 +37,18 @@ public class OrdersController {
         try {
             // 1. 转换请求参数
             Map<String, String> params = request.getParameterMap().entrySet().stream()
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            e -> String.join(",", e.getValue()))
-                    );
-
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue()[0]));
             // 2. 验证签名
-            boolean signVerified = AlipaySignature.rsaCheckV1(
-                    params,
-                    alipayPublicKey,
-                    charset,
-                    signType);
-
+            boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayPublicKey, charset, signType);
             if (!signVerified) {
                 throw new RuntimeException("支付宝回调签名验证失败");
             }
 
             // 3. 处理支付成功逻辑
             if ("TRADE_SUCCESS".equals(params.get("trade_status"))) {
-                ordersService.handlePaymentSuccess(
-                        params.get("out_trade_no"), // 订单号
-                        params.get("trade_no"),     // 支付宝交易号
-                        new BigDecimal(params.get("total_amount")) // 金额
+                ordersService.handlePaymentSuccess(params.get("out_trade_no"), params.get("trade_no"), new BigDecimal(params.get("total_amount")) // 金额
                 );
             }
-
             return "success";
         } catch (Exception e) {
             return "fail";

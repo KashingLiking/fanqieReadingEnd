@@ -39,8 +39,8 @@ public class Orders {
     @JoinColumn(name = "userId", nullable = false)
     private Account account;
 
-    @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private CartsOrdersRelation cartsOrdersRelation;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartsOrdersRelation> cartsOrdersRelation;
 
     public OrdersVO toVO() {
         OrdersVO ordersVO = new OrdersVO();
