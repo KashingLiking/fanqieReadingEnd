@@ -196,4 +196,27 @@ public class ProductServiceImpl implements ProductService {
 
         return productVO;
     }
+
+    @Override
+    public String updateDiscountNumber(Integer productId, Double discountNumber) {
+        if (discountNumber <= 0) {
+            return "折扣率必须大于0";
+        }
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if(productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setDiscountNumber(discountNumber);
+            productRepository.save(product);
+            return "该书籍打折信息更新成功";
+        }
+        return "书籍不存在";
+    }
+    @Override
+    public Double getDiscountNumber(Integer productId){
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if(productOptional.isPresent()){
+            return productOptional.get().getDiscountNumber();
+        }
+        return 1.0;
+    }
 }

@@ -48,6 +48,10 @@ public class Product {
     @Column(name="detail")
     private String detail;
 
+    @Basic
+    @Column(name="discountNumber")
+    private Double discountNumber = 1.0;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Specification> specifications = new ArrayList<>();
 
@@ -66,6 +70,7 @@ public class Product {
         productVO.setDescription(this.description);
         productVO.setCover(this.cover);
         productVO.setDetail(this.detail);
+        productVO.setDiscountNumber(this.discountNumber);
         return productVO;
     }
 }

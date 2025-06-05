@@ -19,4 +19,8 @@ public interface ProductService {
     String updateStockpile(Integer productId,Integer amount);
 
     StockpileVO getStockpile(Integer productId);
+
+    String updateDiscountNumber(Integer productId,Double discountNumber);
+
+    Double getDiscountNumber(Integer productId);
 }

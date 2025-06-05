@@ -26,7 +26,7 @@ public class Carts {
 
     @Basic
     @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 1")
-    private Integer quantity = 1;  // Added default value
+    private Integer quantity = 1;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
