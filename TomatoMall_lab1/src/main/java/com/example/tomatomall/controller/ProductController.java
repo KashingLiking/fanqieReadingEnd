@@ -77,4 +77,21 @@ public class ProductController {
     public ResponseVO<StockpileVO> getStockpile(@PathVariable Integer productId) {
         return ResponseVO.buildSuccess(productService.getStockpile(productId));
     }
+
+    /**
+     * 获取书籍打折信息
+     */
+    @GetMapping("/discount/{productId}")
+    public ResponseVO<Double> getDicountNumber(@PathVariable Integer productId) {
+        return ResponseVO.buildSuccess(productService.getDiscountNumber(productId));
+    }
+
+    /**
+     * 更新商品打折信息
+     */
+    @PatchMapping("/discount/{productId}")
+    public ResponseVO<String> updateDiscountNumber(@PathVariable Integer productId, @RequestBody Map<String,Number> request){
+        Double discountNumber = request.get("discountNumber").doubleValue();
+        return ResponseVO.buildSuccess(productService.updateDiscountNumber(productId, discountNumber));
+    }
 }

@@ -32,6 +32,8 @@ public class ProductVO {
 
     private List<CommentVO> comments;
 
+    private Double discountNumber;
+
     public Product toPO(){
         Product product=new Product();
         product.setId(this.id);
@@ -41,6 +43,7 @@ public class ProductVO {
         product.setDescription(this.description);
         product.setCover(this.cover);
         product.setDetail(this.detail);
+        product.setDiscountNumber(this.discountNumber);
         return product;
     }
 }
