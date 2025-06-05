@@ -5,6 +5,7 @@ import com.example.tomatomall.po.Specification;
 import com.example.tomatomall.po.Stockpile;
 import com.example.tomatomall.repository.ProductRepository;
 import com.example.tomatomall.service.ProductService;
+import com.example.tomatomall.vo.CommentVO;
 import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.SpecificationVO;
 import com.example.tomatomall.vo.StockpileVO;
@@ -195,5 +196,53 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return productVO;
+    }
+
+    @Override
+    public ProductVO getCommentInformation(Integer id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isPresent()){
+            Product product = productOptional.get();
+
+            // 显式初始化关联实体
+            Hibernate.initialize(product.getSpecifications());
+            Hibernate.initialize(product.getStockpile());
+            Hibernate.initialize(product.getComments());
+
+            ProductVO productVO = product.toVO();
+
+            // 转换Specifications
+            List<SpecificationVO> specificationVOs = product.getSpecifications()
+                    .stream()
+                    .map(Specification::toVO)
+                    .collect(Collectors.toList());
+            productVO.setSpecifications(specificationVOs);
+
+            // 转换Stockpile
+            if(product.getStockpile() != null) {
+                productVO.setStockpile(product.getStockpile().toVO());
+            }
+
+            // 转换Comments
+            List<CommentVO> commentVOs = product.getComments()
+                    .stream()
+                    .map(comment -> {
+                        CommentVO commentVO = new CommentVO();
+                        commentVO.setId(comment.getId());
+                        commentVO.setUserId(comment.getAccount().getUserid());
+                        commentVO.setUsername(comment.getAccount().getUsername());
+                        commentVO.setAvatar(comment.getAccount().getAvatar());
+                        commentVO.setContent(comment.getContent());
+                        commentVO.setRating(comment.getRating());
+                        commentVO.setCreatedAt(comment.getCreatedAt());
+                        commentVO.setUpdatedAt(comment.getUpdatedAt());
+                        return commentVO;
+                    })
+                    .collect(Collectors.toList());
+            productVO.setComments(commentVOs);
+
+            return productVO;
+        }
+        return null; // 或者抛出异常
     }
 }

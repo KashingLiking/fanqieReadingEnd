@@ -19,4 +19,6 @@ public interface ProductService {
     String updateStockpile(Integer productId,Integer amount);
 
     StockpileVO getStockpile(Integer productId);
+
+    ProductVO getCommentInformation(Integer id);
 }

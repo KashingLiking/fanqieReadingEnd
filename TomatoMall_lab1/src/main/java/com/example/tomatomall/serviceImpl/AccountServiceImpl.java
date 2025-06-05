@@ -10,6 +10,9 @@ import com.example.tomatomall.vo.AccountVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -80,5 +83,16 @@ public class AccountServiceImpl implements AccountService {
         }
         accountRepository.save(account);
         return "更新成功";
+    }
+
+    @Override
+    @Transactional
+    public void addToTotalSpent(Integer userId, BigDecimal amount) {
+        Account account = accountRepository.findById(userId)
+                .orElseThrow(() -> TomatomallException.usernameNotExits());
+
+        BigDecimal newTotal = account.getTotalSpent().add(amount);
+        account.setTotalSpent(newTotal);
+        accountRepository.save(account);
     }
 }

@@ -30,6 +30,8 @@ public class ProductVO {
 
     private StockpileVO stockpile;
 
+    private List<CommentVO> comments;
+
     public Product toPO(){
         Product product=new Product();
         product.setId(this.id);

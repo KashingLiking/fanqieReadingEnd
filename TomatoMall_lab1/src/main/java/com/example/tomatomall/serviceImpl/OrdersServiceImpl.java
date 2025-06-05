@@ -13,6 +13,7 @@ import com.example.tomatomall.po.Product;
 import com.example.tomatomall.repository.CartsRepository;
 import com.example.tomatomall.repository.OrdersRepository;
 import com.example.tomatomall.repository.ProductRepository;
+import com.example.tomatomall.service.AccountService;
 import com.example.tomatomall.service.OrdersService;
 import com.example.tomatomall.util.SecurityUtil;
 import com.example.tomatomall.vo.*;
@@ -35,6 +36,8 @@ public class OrdersServiceImpl implements OrdersService {
     private OrdersRepository ordersRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -92,6 +95,7 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.save(order);
 
         deductInventory(order.getId());
+        accountService.addToTotalSpent(order.getAccount().getUserid(), order.getTotalAmount());
     }
 
     private void deductInventory(Integer orderId) {

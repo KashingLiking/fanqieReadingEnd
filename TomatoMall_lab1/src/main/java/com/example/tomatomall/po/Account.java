@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,10 @@ public class Account {
     @Column(name="location")
     private String location;
 
+    @Basic
+    @Column(name = "total_spent", nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    private BigDecimal totalSpent = BigDecimal.ZERO;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Orders> orders = new ArrayList<>();
 
@@ -70,6 +75,7 @@ public class Account {
         accountVO.setTelephone(this.telephone);
         accountVO.setEmail(this.email);
         accountVO.setLocation(this.location);
+        accountVO.setTotalSpent(this.totalSpent);
         return accountVO;
     }
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,6 +30,8 @@ public class AccountVO {
 
     private String location;
 
+    private BigDecimal totalSpent;
+
     public Account toPO(){
         Account account=new Account();
         account.setUsername(this.username);
@@ -38,6 +42,7 @@ public class AccountVO {
         account.setTelephone(this.telephone);
         account.setEmail(this.email);
         account.setLocation(this.location);
+        account.setTotalSpent(this.totalSpent != null ? this.totalSpent : BigDecimal.ZERO);
         return account;
     }
 }

@@ -42,4 +42,11 @@ public class TomatomallException extends RuntimeException {
 
     public static TomatomallException orderNotExits() {return new TomatomallException("400", "订单不存在");}
 
+    public static TomatomallException commentNotExits() {
+        return new TomatomallException("400","评论不存在");
+    }
+
+    public static TomatomallException noPermission() {
+        return new TomatomallException("403","无权限操作");
+    }
 }
