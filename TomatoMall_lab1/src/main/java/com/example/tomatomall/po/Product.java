@@ -1,5 +1,7 @@
 package com.example.tomatomall.po;
 
+import com.example.tomatomall.enums.BookTypeEnum;
+import com.example.tomatomall.enums.RoleEnum;
 import com.example.tomatomall.vo.ProductVO;
 import com.example.tomatomall.vo.SpecificationVO;
 import com.example.tomatomall.vo.StockpileVO;
@@ -52,6 +54,11 @@ public class Product {
     @Column(name="discountNumber")
     private Double discountNumber = 1.0;
 
+    @Basic
+    @Column(name="BookType",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookTypeEnum bookType;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Specification> specifications = new ArrayList<>();
 
@@ -74,6 +81,7 @@ public class Product {
         productVO.setCover(this.cover);
         productVO.setDetail(this.detail);
         productVO.setDiscountNumber(this.discountNumber);
+        productVO.setBookType(this.bookType);
         return productVO;
     }
 

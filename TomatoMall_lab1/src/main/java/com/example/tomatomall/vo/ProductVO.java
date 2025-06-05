@@ -3,6 +3,7 @@ package com.example.tomatomall.vo;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.example.tomatomall.enums.BookTypeEnum;
 import com.example.tomatomall.po.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,8 @@ public class ProductVO {
 
     private Double discountNumber;
 
+    private BookTypeEnum bookType;
+
     public Product toPO(){
         Product product=new Product();
         product.setId(this.id);
@@ -44,6 +47,7 @@ public class ProductVO {
         product.setCover(this.cover);
         product.setDetail(this.detail);
         product.setDiscountNumber(this.discountNumber);
+        product.setBookType(this.bookType);
         return product;
     }
 }
