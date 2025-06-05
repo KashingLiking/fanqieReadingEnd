@@ -268,4 +268,17 @@ public class ProductServiceImpl implements ProductService {
         }
         return 1.0;
     }
+
+    @Override
+    @Transactional
+    public String recommendProduct(Integer productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setRecommendCount(product.getRecommendCount() + 1); // 推荐数+1
+            productRepository.save(product);
+            return "推荐成功";
+        }
+        return "商品不存在";
+    }
 }

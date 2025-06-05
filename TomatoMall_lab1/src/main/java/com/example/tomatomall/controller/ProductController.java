@@ -94,4 +94,9 @@ public class ProductController {
         Double discountNumber = request.get("discountNumber").doubleValue();
         return ResponseVO.buildSuccess(productService.updateDiscountNumber(productId, discountNumber));
     }
+
+    @PostMapping("/recommend/{productId}")
+    public ResponseVO<String> recommendProduct(@PathVariable Integer productId) {
+        return ResponseVO.buildSuccess(productService.recommendProduct(productId));
+    }
 }

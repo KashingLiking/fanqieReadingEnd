@@ -59,6 +59,10 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private BookTypeEnum bookType;
 
+    @Basic
+    @Column(name = "recommend_count", columnDefinition = "int default 0")
+    private Integer recommendCount = 0;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Specification> specifications = new ArrayList<>();
 
@@ -82,6 +86,7 @@ public class Product {
         productVO.setDetail(this.detail);
         productVO.setDiscountNumber(this.discountNumber);
         productVO.setBookType(this.bookType);
+        productVO.setRecommendCount(this.recommendCount);
         return productVO;
     }
 

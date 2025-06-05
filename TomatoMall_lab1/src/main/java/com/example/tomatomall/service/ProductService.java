@@ -25,4 +25,6 @@ public interface ProductService {
     String updateDiscountNumber(Integer productId,Double discountNumber);
 
     Double getDiscountNumber(Integer productId);
+
+    String recommendProduct(Integer productId);
 }

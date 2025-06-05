@@ -37,6 +37,8 @@ public class ProductVO {
 
     private BookTypeEnum bookType;
 
+    private Integer recommendCount;
+
     public Product toPO(){
         Product product=new Product();
         product.setId(this.id);
@@ -48,6 +50,7 @@ public class ProductVO {
         product.setDetail(this.detail);
         product.setDiscountNumber(this.discountNumber);
         product.setBookType(this.bookType);
+        product.setRecommendCount(this.recommendCount);
         return product;
     }
 }
