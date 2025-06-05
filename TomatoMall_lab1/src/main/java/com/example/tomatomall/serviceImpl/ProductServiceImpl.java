@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
             product.setDescription(productVO.getDescription());
             product.setCover(productVO.getCover());
             product.setDetail(productVO.getDetail());
-
+            product.setDiscountNumber(product.getDiscountNumber());
             // 更新规格信息
             if (productVO.getSpecifications() != null) {
                 product.getSpecifications().clear();
@@ -103,6 +103,12 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductVO addProduct(ProductVO productVO) {
         try {
+            if(productVO.getDiscountNumber()==null){
+                productVO.setDiscountNumber(1.0);
+            }
+            if(productVO.getRecommendCount()==null){
+                productVO.setRecommendCount(0);
+            }
             Product product = productVO.toPO();
 
             // 处理规格
@@ -246,20 +252,6 @@ public class ProductServiceImpl implements ProductService {
         return null; // 或者抛出异常
     }
 
-    @Override
-    public String updateDiscountNumber(Integer productId, Double discountNumber) {
-        if (discountNumber <= 0) {
-            return "折扣率必须大于0";
-        }
-        Optional<Product> productOptional = productRepository.findById(productId);
-        if(productOptional.isPresent()) {
-            Product product = productOptional.get();
-            product.setDiscountNumber(discountNumber);
-            productRepository.save(product);
-            return "该书籍打折信息更新成功";
-        }
-        return "书籍不存在";
-    }
     @Override
     public Double getDiscountNumber(Integer productId){
         Optional<Product> productOptional = productRepository.findById(productId);

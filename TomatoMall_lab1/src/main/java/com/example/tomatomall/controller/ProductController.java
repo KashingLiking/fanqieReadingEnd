@@ -86,15 +86,6 @@ public class ProductController {
         return ResponseVO.buildSuccess(productService.getDiscountNumber(productId));
     }
 
-    /**
-     * 更新商品打折信息
-     */
-    @PatchMapping("/discount/{productId}")
-    public ResponseVO<String> updateDiscountNumber(@PathVariable Integer productId, @RequestBody Map<String,Number> request){
-        Double discountNumber = request.get("discountNumber").doubleValue();
-        return ResponseVO.buildSuccess(productService.updateDiscountNumber(productId, discountNumber));
-    }
-
     @PostMapping("/recommend/{productId}")
     public ResponseVO<String> recommendProduct(@PathVariable Integer productId) {
         return ResponseVO.buildSuccess(productService.recommendProduct(productId));

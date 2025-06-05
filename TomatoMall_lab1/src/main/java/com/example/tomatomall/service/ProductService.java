@@ -22,8 +22,6 @@ public interface ProductService {
 
     ProductVO getCommentInformation(Integer id);
 
-    String updateDiscountNumber(Integer productId,Double discountNumber);
-
     Double getDiscountNumber(Integer productId);
 
     String recommendProduct(Integer productId);
