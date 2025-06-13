@@ -90,4 +90,9 @@ public class ProductController {
     public ResponseVO<String> recommendProduct(@PathVariable Integer productId) {
         return ResponseVO.buildSuccess(productService.recommendProduct(productId));
     }
+
+    @GetMapping("/sold/{productId}")
+    public ResponseVO<Integer> getSoldQuantity(@PathVariable Integer productId) {
+        return ResponseVO.buildSuccess(productService.getSoldQuantity(productId));
+    }
 }

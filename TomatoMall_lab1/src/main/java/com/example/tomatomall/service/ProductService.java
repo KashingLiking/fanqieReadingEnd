@@ -25,4 +25,6 @@ public interface ProductService {
     Double getDiscountNumber(Integer productId);
 
     String recommendProduct(Integer productId);
+
+    Integer getSoldQuantity(Integer productId);
 }

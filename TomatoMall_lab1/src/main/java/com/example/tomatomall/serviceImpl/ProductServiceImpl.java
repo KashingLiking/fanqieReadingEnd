@@ -273,4 +273,10 @@ public class ProductServiceImpl implements ProductService {
         }
         return "商品不存在";
     }
+
+    @Override
+    public Integer getSoldQuantity(Integer productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        return productOptional.map(Product::getSoldQuantity).orElse(0);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.tomatomall.serviceImpl;
 
+import com.example.tomatomall.enums.MembershipLevel;
 import com.example.tomatomall.exception.TomatomallException;
 import com.example.tomatomall.po.Account;
 import com.example.tomatomall.repository.AccountRepository;
@@ -94,5 +95,26 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal newTotal = account.getTotalSpent().add(amount);
         account.setTotalSpent(newTotal);
         accountRepository.save(account);
+        updateMembershipLevel(userId);
+    }
+
+    @Override
+    public MembershipLevel getMembershipLevel(Integer userId) {
+        Account account = accountRepository.findById(userId)
+                .orElseThrow(() -> TomatomallException.usernameNotExits());
+        return account.getMembershipLevel();
+    }
+
+    @Override
+    @Transactional
+    public void updateMembershipLevel(Integer userId) {
+        Account account = accountRepository.findById(userId)
+                .orElseThrow(() -> TomatomallException.usernameNotExits());
+
+        MembershipLevel newLevel = MembershipLevel.fromTotalSpent(account.getTotalSpent());
+        if (!newLevel.equals(account.getMembershipLevel())) {
+            account.setMembershipLevel(newLevel);
+            accountRepository.save(account);
+        }
     }
 }

@@ -114,6 +114,7 @@ public class OrdersServiceImpl implements OrdersService {
                 throw TomatomallException.productsNotEnough();
             }
             product.getStockpile().setAmount(currentStock - requiredQuantity);
+            product.setSoldQuantity((product.getSoldQuantity() != null ? product.getSoldQuantity() : 0) + requiredQuantity);
             productRepository.save(product);
         }
     }

@@ -1,5 +1,6 @@
 package com.example.tomatomall.po;
 
+import com.example.tomatomall.enums.MembershipLevel;
 import com.example.tomatomall.enums.RoleEnum;
 import com.example.tomatomall.vo.AccountVO;
 import lombok.Getter;
@@ -55,6 +56,10 @@ public class Account {
     @Column(name="location")
     private String location;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "membership_level")
+    private MembershipLevel membershipLevel = MembershipLevel.BRONZE;
+
     @Basic
     @Column(name = "total_spent", nullable = false, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
     private BigDecimal totalSpent = BigDecimal.ZERO;
@@ -76,6 +81,7 @@ public class Account {
         accountVO.setEmail(this.email);
         accountVO.setLocation(this.location);
         accountVO.setTotalSpent(this.totalSpent);
+        accountVO.setMembershipLevel(this.membershipLevel);
         return accountVO;
     }
 }

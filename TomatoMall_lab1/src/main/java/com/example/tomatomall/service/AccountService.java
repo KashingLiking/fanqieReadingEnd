@@ -1,5 +1,6 @@
 package com.example.tomatomall.service;
 
+import com.example.tomatomall.enums.MembershipLevel;
 import com.example.tomatomall.vo.AccountVO;
 
 import java.math.BigDecimal;
@@ -14,4 +15,8 @@ public interface AccountService {
     String updateInformation(AccountVO accountVO);
 
     void addToTotalSpent(Integer userId, BigDecimal amount);
+
+    MembershipLevel getMembershipLevel(Integer userId);
+
+    void updateMembershipLevel(Integer userId);
 }

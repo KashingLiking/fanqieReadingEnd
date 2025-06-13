@@ -1,5 +1,6 @@
 package com.example.tomatomall.controller;
 
+import com.example.tomatomall.enums.MembershipLevel;
 import com.example.tomatomall.exception.TomatomallException;
 import com.example.tomatomall.po.Account;
 import com.example.tomatomall.repository.AccountRepository;
@@ -69,5 +70,21 @@ public class AccountController {
         Account account = accountRepository.findByUsername(request.username);
         httpRequest.getSession().setAttribute("currentAccount", account);
         return ResponseVO.buildSuccess(token);
+    }
+
+    @GetMapping("/{username}/membership")
+    public ResponseVO<MembershipLevel> getMembershipLevel(
+            @RequestHeader("token") String token,
+            @PathVariable String username) {
+        if (!tokenUtil.verifyToken(token)) {
+            throw TomatomallException.notLogin();
+        }
+
+        Account account = accountRepository.findByUsername(username);
+        if (account == null) {
+            throw TomatomallException.usernameNotExits();
+        }
+
+        return ResponseVO.buildSuccess(accountService.getMembershipLevel(account.getUserid()));
     }
 }

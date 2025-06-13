@@ -63,6 +63,11 @@ public class Product {
     @Column(name = "recommend_count", columnDefinition = "int default 0")
     private Integer recommendCount = 0;
 
+    @Basic
+    @Column(name = "sold_quantity", columnDefinition = "int default 0")
+    private Integer soldQuantity = 0;
+
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Specification> specifications = new ArrayList<>();
 
@@ -87,6 +92,7 @@ public class Product {
         productVO.setDiscountNumber(this.discountNumber);
         productVO.setBookType(this.bookType);
         productVO.setRecommendCount(this.recommendCount);
+        productVO.setSoldQuantity(this.soldQuantity);
         return productVO;
     }
 

@@ -1,5 +1,6 @@
 package com.example.tomatomall.vo;
 
+import com.example.tomatomall.enums.MembershipLevel;
 import com.example.tomatomall.enums.RoleEnum;
 import com.example.tomatomall.po.Account;
 import lombok.Getter;
@@ -32,6 +33,8 @@ public class AccountVO {
 
     private BigDecimal totalSpent;
 
+    private MembershipLevel membershipLevel;
+
     public Account toPO(){
         Account account=new Account();
         account.setUsername(this.username);
@@ -43,6 +46,7 @@ public class AccountVO {
         account.setEmail(this.email);
         account.setLocation(this.location);
         account.setTotalSpent(this.totalSpent != null ? this.totalSpent : BigDecimal.ZERO);
+        account.setMembershipLevel(this.membershipLevel != null ? this.membershipLevel : MembershipLevel.BRONZE);
         return account;
     }
 }
