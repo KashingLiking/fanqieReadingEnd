@@ -95,6 +95,4 @@ public class Product {
         productVO.setSoldQuantity(this.soldQuantity);
         return productVO;
     }
-
-
 }

@@ -76,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCover(productVO.getCover());
             product.setDetail(productVO.getDetail());
             product.setDiscountNumber(product.getDiscountNumber());
+            product.setBookType(productVO.getBookType());
             // 更新规格信息
             if (productVO.getSpecifications() != null) {
                 product.getSpecifications().clear();
@@ -278,5 +279,23 @@ public class ProductServiceImpl implements ProductService {
     public Integer getSoldQuantity(Integer productId) {
         Optional<Product> productOptional = productRepository.findById(productId);
         return productOptional.map(Product::getSoldQuantity).orElse(0);
+    }
+
+    @Override
+    @Transactional
+    public String updateDiscount(Integer productId, Double discountNumber) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (productOptional.isPresent()) {
+            // Validate discount number (typically between 0 and 1)
+            if (discountNumber <= 0 || discountNumber > 1) {
+                return "折扣数值必须在0到1之间";
+            }
+
+            Product product = productOptional.get();
+            product.setDiscountNumber(discountNumber);
+            productRepository.save(product);
+            return "折扣更新成功";
+        }
+        return "商品不存在";
     }
 }

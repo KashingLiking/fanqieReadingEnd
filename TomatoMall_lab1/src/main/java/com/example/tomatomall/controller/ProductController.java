@@ -95,4 +95,12 @@ public class ProductController {
     public ResponseVO<Integer> getSoldQuantity(@PathVariable Integer productId) {
         return ResponseVO.buildSuccess(productService.getSoldQuantity(productId));
     }
+
+    @PatchMapping("/updateDiscount/{productId}")
+    public ResponseVO<String> updateDiscount(
+            @PathVariable Integer productId,
+            @RequestBody Map<String, Double> request) {
+        Double discountNumber = request.get("discountNumber");
+        return ResponseVO.buildSuccess(productService.updateDiscount(productId, discountNumber));
+    }
 }
